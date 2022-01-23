@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // 指定ECMAScript目标版本 
+    "useDefineForClassFields": true,
+    "module": "esnext", // 指定生成哪个模块系统代码
+    "moduleResolution": "node", // 决定如何处理模块
+    "strict": true, // 启用所有严格类型检查选项
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom", "ES2015"],
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // ts 排除的文件
+  "exclude": ["node_modules"]
+}
