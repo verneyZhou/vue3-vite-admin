@@ -5,6 +5,8 @@ import viteSvgIcons from 'vite-plugin-svg-icons' // 导入svg-icon
 import { viteMockServe } from 'vite-plugin-mock' // mock
 import legacy from '@vitejs/plugin-legacy' // 为打包后的文件提供传统浏览器兼容性支持
 
+import rollupImportVariables from 'rollup-plugin-dynamic-import-variables';
+
 import setting from './src/settings'
 const prodMock = setting.openProdMock
 
@@ -67,7 +69,7 @@ export default ({command, mode}: any) => {
         supportTs: true, // 打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件。
         mockPath: 'mock', // 设置模拟.ts 文件的存储文件夹: 根目录下 mock/ 文件夹
         localEnabled: command === 'serve', // 设置是否启用本地 xxx.ts 文件，不要在生产环境中打开它.设置为 false 将禁用 mock 功能
-        prodEnabled: command !== 'serve' && prodMock, // 设置打包是否启用 mock 功能
+        prodEnabled: true || command !== 'serve' && prodMock, // 设置打包是否启用 mock 功能
         injectCode: `
           import { setupProdMockServer } from './mockProdServer';
           setupProdMockServer();
@@ -77,8 +79,21 @@ export default ({command, mode}: any) => {
       })
     ],
     build:{ // 构建
+      minify: 'terser',
+      brotliSize: false,
       // 消除打包大小超过500kb警告
       chunkSizeWarningLimit: 2000,
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      rollupOptions: {
+        plugins:[
+          rollupImportVariables()
+        ]
+      },
     },
     optimizeDeps: { // 依赖预构建优化
       include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en']

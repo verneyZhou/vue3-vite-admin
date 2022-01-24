@@ -302,3 +302,18 @@ https://www.tslang.cn/docs/handbook/tsconfig-json.html
 
 
 
+---
+
+## 打包报错
+
+```
+[rollup-plugin-dynamic-import-variables] Unexpected token (15:20)
+file: /Users/admin/my-code/self/byme/vue3-study/vue3-vite-admin/src/main.ts:15:20
+error during build:
+SyntaxError: Unexpected token (15:20)
+    at Parser.pp$5.raise (/Users/admin/my-code/self/byme/vue3-study/vue3-vite-admin/node_modules/rollup/dist/shared/rollup.js:19495:13)
+    at Parser.pp.unexpected (/Users/admin/my-code/self/byme/vue3-study/vue3-vite-admin/node_modules/rollup/dist/shared/rollup.js:16820:8)
+    at Parser.pp.expect (/Users/admin/my-code/self/byme/vue3-study/vue3-vite-admin/node_modules/rollup/dist/shared/rollup.js:16814:26)
+```
+> 原因是在`main.ts`中执行了`console.log('=====import.meta.env', import.meta.env);`，把它注释即可~至于原因，暂时无解~
+
